@@ -24,6 +24,8 @@ class Book(models.Model):
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     # Foreign Key used because book can only have one author, but authors can have multiple books
     # Author as a string rather than object because it hasn't been declared yet in the file.
+   
+    
     summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
     isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
@@ -42,6 +44,18 @@ class Book(models.Model):
         Returns the url to access a particular book instance.
         """
         return reverse('book-detail', args=[str(self.id)])
+        
+    def display_genre(self):
+        """
+        Creates a string for the Genre. This is required to display genre in Admin.
+        """
+        return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
+        
+        
+    display_genre.short_description = 'Genre'
+    
+    '''This creates a string from the first three values of the genre field 
+    (if they exist) and creates a short_description that can be used in the admin site for this method.'''
         
         
         
@@ -73,7 +87,7 @@ class BookInstance(models.Model):
         """
         String for representing the Model object
         """
-        return '%s (%s)' % (self.id, self.Book.title)
+        return '%s (%s)' % (self.id, self.imprint)
         
         
 class Author(models.Model):
