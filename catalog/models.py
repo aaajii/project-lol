@@ -40,10 +40,12 @@ class Book(models.Model):
     
     
     def get_absolute_url(self):
-        """
+        """**important in detail-view
         Returns the url to access a particular book instance.
         """
         return reverse('book-detail', args=[str(self.id)])
+        
+        #convert to string first before sending object.id, this replaces argument placeholder on a certain url.
         
     def display_genre(self):
         """
