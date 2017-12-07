@@ -24,6 +24,7 @@ def index(request):
         context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors},
     )
     
+    #added pagination variable here, only applies on class based views
 class BookListView(generic.ListView):
     model = Book
     #thats about it, but u can modify more like these:
@@ -35,7 +36,8 @@ class BookListView(generic.ListView):
         isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
         genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
     '''
-    
+    #PAGINATION, JUST ADD THIS VARIABLE AND ITS VALUE (check out the updated base_generic.html too!)
+    paginate_by = 2
     
     #'context_object_name = 'my_book_list'   # your own name for the list as a template variable
     
@@ -103,6 +105,24 @@ class BookDetailView(generic.DetailView):
         
     '''
 
+class AuthorListView(generic.ListView):
+    model = Author
+    '''
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    date_of_birth = models.DateField(null=True, blank=True)
+    date_of_death = models.DateField('Died', null=True, blank=True)
+    '''
+    
+    
+    template_name='catalog/authors_list.html'
+    
+    context_object_name = "authorsList"
+    
+    
+class AuthorDetailView(generic.DetailView):
+    model = Author
+    
 
 #tip! regular expressions details ehueheuehe
 def patterns(request):
