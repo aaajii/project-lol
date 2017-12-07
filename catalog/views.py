@@ -28,14 +28,12 @@ class BookListView(generic.ListView):
     model = Book
     #thats about it, but u can modify more like these:
     '''Book attributes:
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    
-    summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
-    isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
-    genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
-    
-    
+        title = models.CharField(max_length=200)
+        author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+        
+        summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
+        isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
+        genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
     '''
     
     
@@ -43,9 +41,14 @@ class BookListView(generic.ListView):
     
     
     #'queryset = Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
+    
+    
+    ''' !!!! DO THIS IF U WANNA FILTER A CLASS BASED VIEW !!!!'''
     def get_queryset(self):
-        return Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
+         return Book.objects.all();
+    #    return Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
     # passes object_list to the template, in this case, book_list
+    
     
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -54,4 +57,53 @@ class BookListView(generic.ListView):
         context['some_data'] = 'This is just some data'
         return context
     
-    template_name = 'books_list.html'  # Specify your own template name/location
+    template_name = 'catalog/books_list.html'  # Specify your own template name/location
+    
+class BookDetailView(generic.DetailView):
+    #we dont DIRECTLY use reference models as our main model
+    model = Book
+    template_name = 'catalog/book_deets.html'
+    
+    
+    
+    '''BookInstance model attributes:
+         id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular book across whole library")
+        book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True) 
+        imprint = models.CharField(max_length=200)
+        due_back = models.DateField(null=True, blank=True)
+    
+        LOAN_STATUS = (
+            ('m', 'Maintenance'),
+            ('o', 'On loan'),
+            ('a', 'Available'),
+            ('r', 'Reserved'),
+        )
+        
+         status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Book availability')
+    '''
+    
+    ''' BY THE WAY THIS IS THE FUNCTION BASED VIEW VERSION OF BOOKDETAILS
+    with 404 handling...:
+    
+        def book_detail_view(request,pk):
+            try:
+                book_id=Book.objects.get(pk=pk)
+            except Book.DoesNotExist:
+                raise Http404("Book does not exist")
+            
+            #this is the code version of it, ONE LINE VERSION FTW!
+            
+            #book_id=get_object_or_404(Book, pk=pk)
+            
+            return render(
+                request,
+                'catalog/book_detail.html',
+                context={'book':book_id,}
+            )
+        
+    '''
+
+
+#tip! regular expressions details ehueheuehe
+def patterns(request):
+    return render(request, 'patterns.html')

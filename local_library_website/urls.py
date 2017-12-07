@@ -2,6 +2,8 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
+
+
 urlpatterns = [
     url(r'^catalog/', include('catalog.urls')),
     url(r'^admin/', admin.site.urls),
@@ -14,3 +16,10 @@ urlpatterns += [
     #r'^$' is the localhost:8080, or the home page.
     url(r'^$', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]
+
+
+#for patterns display
+from catalog import views
+urlpatterns += [
+        url(r'^patterns$', views.patterns, name='patterns')
+    ]

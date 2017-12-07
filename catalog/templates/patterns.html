@@ -1,0 +1,100 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+<style>
+table, td, th {
+    border: 1px solid black;
+    height: 50px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+</style>
+<table class="standard-table">
+ <thead>
+  <tr>
+   <th scope="col">Symbol</th>
+   <th scope="col">Meaning</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>^</td>
+   <td>Match the beginning of the text</td>
+  </tr>
+  <tr>
+   <td>$</td>
+   <td>Match the end of the text</td>
+  </tr>
+  <tr>
+   <td>\d</td>
+   <td>Match a digit (0, 1, 2, ... 9)</td>
+  </tr>
+  <tr>
+   <td>\w</td>
+   <td>Match a word character, e.g. any upper- or lower-case character in the alphabet, digit or the underscore character (_)</td>
+   
+   
+   
+   <br>
+   
+   <table class="standard-table">
+ <thead>
+  <tr>
+   <th scope="col">Pattern</th>
+   <th scope="col">Description</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><strong>r'^book/(?P&lt;pk&gt;\d+)$'</strong></td>
+   <td>
+    <p>This is the RE used in our url mapper. It matches a string that has <code>book/</code> at the start of the line (<strong>^book/</strong>), then has one or more digits (<code>\d+</code>), and then ends (with no non-digit characters before the end of line marker).</p>
+
+    <p>It also captures all the digits <strong>(?P&lt;pk&gt;\d+)</strong> and passes them to the view in a parameter named 'pk'. <strong>The captured values are always passed as a string!</strong></p>
+
+    <p>For example, this would match <code>book/1234</code> , and send a variable <code>pk='1234'</code> to the view.</p>
+   </td>
+  </tr>
+  <tr>
+   <td><strong>r'^book/(\d+)$'</strong></td>
+   <td>This matches the same URLs as the preceding case. The captured information would be sent as an unnamed argument to the view.</td>
+  </tr>
+  <tr>
+   <td><strong>r'^book/(?P&lt;stub&gt;[-\w]+)$'</strong></td>
+   <td>
+    <p>This matches a string that has <code>book/</code> at the start of the line (<strong>^book/</strong>), then has one or more characters that are <em>either</em> a '-' or a word character (<strong>[-\w]+</strong>), and then ends. It also captures this set of characters and passes them to the view in a parameter named 'stub'.</p>
+
+    <p>This is a fairly typical pattern for a "stub". Stubs are URL-friendly word-based primary keys for data. You might use a stub if you wanted your book URL to be more informative. For example <code>/catalog/book/the-secret-garden</code> rather than <code>/catalog/book/33</code>.</p>
+   </td>
+  </tr>
+ </tbody>
+  </tr>
+  <tr>
+   <td>+</td>
+   <td>Match one or more of the preceding character. For example, to match one or more digits you would use <code>\d+</code>. To match one or more "a" characters, you could use <code>a+</code></td>
+  </tr>
+  <tr>
+   <td>*</td>
+   <td>Match zero or more of the preceding character. For example, to match nothing or a word you could use <code>\w*</code></td>
+  </tr>
+  <tr>
+   <td>( )</td>
+   <td>Capture the part of the pattern inside the brackets. Any captured values will be passed to the view as unnamed parameters (if multiple patterns are captured, the associated parameters will be supplied in the order that the captures were declared).</td>
+  </tr>
+  <tr>
+   <td>(?P&lt;<em>name</em>&gt;...)</td>
+   <td>Capture the pattern (indicated by ...) as a named variable (in this case "name"). The captured values are passed to the view with the name specified. Your view must therefore declare an argument with the same name!</td>
+  </tr>
+  <tr>
+   <td>[ &nbsp;]</td>
+   <td>Match against one character in the set. For example, [abc] will match on 'a' or 'b' or 'c'. [-\w] will match on the '-' character or any word character.</td>
+  </tr>
+ </tbody>
+</table>
+
+
+{% endblock %}
