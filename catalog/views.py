@@ -129,11 +129,35 @@ class AuthorListView(generic.ListView):
     
     context_object_name = "authorsList"
     
-    
 class AuthorDetailView(generic.DetailView):
     model = Author
     
-
-#tip! regular expressions details ehueheuehe
-def patterns(request):
-    return render(request, 'patterns.html')
+class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
+    """
+    Generic class-based view listing books on loan to current user. 
+    """
+    model = BookInstance
+    """ BookInstance attributes:
+        id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular book across whole library")
+        book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True) 
+        imprint = models.CharField(max_length=200)
+        due_back = models.DateField(null=True, blank=True)
+    
+        LOAN_STATUS = (
+            ('m', 'Maintenance'),
+            ('o', 'On loan'),
+            ('a', 'Available'),
+            ('r', 'Reserved'),
+        )
+    
+        status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Book availability')
+    
+        #added new attribute to enable borrowing of books
+        borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    """
+    template_name ='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+        #you can place alot of .filter here

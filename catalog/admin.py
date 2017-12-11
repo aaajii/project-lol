@@ -31,12 +31,20 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(BookInstance) 
 class BookInstanceAdmin(admin.ModelAdmin):
+    list_display = ('book', 'status', 'borrower', 'due_back', 'id')
     list_filter = ('status', 'due_back')
+    
+    fieldsets = (
+        (None, {
+            'fields': ('book','imprint', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status', 'due_back','borrower')
+        }),
+    )
 
 '''Once you've got a lot of items in a list, it can be useful to be able to filter which items are displayed.
 This is done by listing fields in the list_filter attribute. '''
 
 
-''' Currently all of our admin classes are empty (see "pass") so the admin behaviour 
-will be unchanged! We can now extend these to define our model-specific admin behaviour'''
 

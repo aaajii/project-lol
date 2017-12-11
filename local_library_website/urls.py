@@ -17,13 +17,6 @@ urlpatterns += [
     url(r'^$', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]
 
-
-#for patterns display
-from catalog import views
-urlpatterns += [
-        url(r'^patterns$', views.patterns, name='patterns')
-    ]
-    
 #Add Django site authentication urls (for login, logout, password management)
 urlpatterns += [
         url(r'^accounts/', include('django.contrib.auth.urls')),

@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Genre(models.Model):
@@ -63,6 +64,15 @@ class Book(models.Model):
         
 import uuid # Required for unique book instances
 
+#for overdue check
+from datetime import date
+
+@property
+def is_overdue(self):
+    if self.due_back and date.today() > self.due_back:
+        return True
+    return False
+
 class BookInstance(models.Model):
     """
     Model representing a specific copy of a book (i.e. that can be borrowed from the library).
@@ -81,8 +91,13 @@ class BookInstance(models.Model):
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Book availability')
 
+    #added new attribute to enable borrowing of books
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
     class Meta:
         ordering = ["due_back"]
+        permissions = (("can_mark_returned", "Set book as returned"),)
+        #The current user's permissions are stored in a template variable called {{ perms }}
         
 
     def __str__(self):
