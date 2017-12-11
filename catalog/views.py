@@ -3,9 +3,13 @@ from django.views import generic
 
 
 from models import Book, Author, BookInstance, Genre
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
+
+@login_required
 def index(request):
     """
     View function for home page of site.
@@ -31,17 +35,17 @@ def index(request):
     #added pagination variable here, only applies on class based views
     
     
-class BookListView(generic.ListView):
+class BookListView(LoginRequiredMixin, generic.ListView):
+    #these 2 are for the loginrequiredmixin 
+    login_url = '/accounts/login/'
+    #base on the field name from the login handle bars ehuehe
+    redirect_field_name = 'next'
+    
+    
     model = Book
+    
     #thats about it, but u can modify more like these:
-    '''Book attributes:
-        title = models.CharField(max_length=200)
-        author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-        
-        summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
-        isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
-        genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
-    '''
+    
     #PAGINATION, JUST ADD THIS VARIABLE AND ITS VALUE (check out the updated base_generic.html too!)
     paginate_by = 2
     
