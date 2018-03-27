@@ -1,0 +1,62 @@
+{% extends 'shop/base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+    <div class="content">
+        <h1> Vehicle Management </h1>
+
+    <div style="padding-bottom: 20px;">
+
+    </div>
+        <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>e
+              <th>Plate #</th>
+              <th>Make</th>
+              <th>Model</th>
+              <th>Engine No.</th>
+                <th>Chasis No.</th>
+                <th>Color</th>
+                <th>Type</th>
+                <th>Customer Name</th>
+                <th></th>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
+                  {% for vehicle in all_vehicle %}
+                 <tr>
+                  <td>{{vehicle.plate_no }}</td>
+                  <td>{{vehicle.make }}</td>
+                  <td>{{vehicle.model }}</td>
+                  <td>{{vehicle.engine_no }}</td>
+                  <td>{{vehicle.chasis_no }}</td>
+                  <td>{{vehicle.color }}</td>
+                  <td>{{vehicle.type }}</td>
+                  <td>{{vehicle.fkid_cust }}</td> <!--Dapat hindi to naka-ID... name dapat. How to?-->
+                  <td><a href="{% url 'shop:vehicle-upd' pk=vehicle.pk %}"> Update </a></td>
+                  <td><a href="{% url 'shop:vehicle-dlt' pk=vehicle.pk %}"> Delete </a></td>
+                </tr>
+
+              {% endfor %}
+          </tbody>
+        </table>
+        </div>
+
+        <div id="btn-add">
+             <hr/>
+            <a href="{% url 'shop:vehicle-add' %}" class="button-add" role="button"
+                style="
+                float: right;
+                padding: 5px 30px 5px 30px;
+                margin-right: 15px;
+                border-radius: 0;
+                background-color:#ecf0f1;
+                border: 2px solid #34495e;
+                color: #2c3e50; " >
+                Add Vehicle </a>
+        </div>
+    </div>
+
+{% endblock %}

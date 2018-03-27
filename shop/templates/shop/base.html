@@ -1,0 +1,56 @@
+
+
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    {% block title %}<title>Aji Repair Shop</title>{% endblock %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Prata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}"/>
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-3.1.1.min.js' %}"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="header">
+        <div class="navbar-header">
+            <button type="navbar-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=""> Repair Shop </a>
+        </div>
+         <div class="search-bar">
+                <form>
+                    <span class="glyphicon glyphicon-search" style="color:#ccc; padding-right: 5px;"></span>
+                    <input type="text" name="search" placeholder="Search"/>
+                </form>
+         </div>
+    </div>
+
+     <div id="container">
+        <div class="sidebar">
+
+            <ul class="selected" id="nav">
+                <li> <a href="{% url 'shop:index' %}"> <span class="glyphicon glyphicon-th-large" style="padding-right: 15px;"> </span>
+                        Dashboard </a> </li>
+                <li> <a href="{% url 'shop:profile' %}"> <span class="glyphicon glyphicon-user" style="padding-right:15px;"> </span>
+                        Profile </a> </li>
+                <li> <a href=""> <span class="glyphicon glyphicon-cog" style="padding-right:15px;"> </span>
+                        Settings </a> </li>
+                <li> <a href=""> <span class="glyphicon glyphicon-off" style="padding-right:15px;"> </span>
+                        Logout </a> </li>
+            </ul>
+        </div>
+        {% block body %}
+
+        {% endblock %}
+     </div>
+
+</body>
+</html>

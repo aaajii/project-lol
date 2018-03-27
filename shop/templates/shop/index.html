@@ -1,0 +1,86 @@
+{% extends 'shop/base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+
+        <div class="content">
+            <h1> Dashboard </h1>
+
+            <div class=" col-sm-4" style="display: inline-block;">
+                <div id="box">
+                    <div class="box-top"> Vehicle Management </div>
+                    <div class="box-panel">
+                        <div class="container-fluid">
+                            <div class="image-dash">
+                                <a href="{% url 'shop:vehicle' %}">  <img src="{% static 'images/car.png' %}" style="width:60%; margin-left: 60px;"/> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="box">
+                    <div class="box-top"> Customer Management </div>
+                    <div class="box-panel">
+                        <div class="container-fluid">
+                            <div class="image-dash">
+                               <a href="{% url 'shop:customer' %}"> <img src="{% static 'images/meeting.png' %}" style="width:60%; margin-left: 60px; "/> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class=" col-sm-4" style="display: inline-block;">
+                <div id="box">
+                     <div class="box-top"> Jobs Management </div>
+                    <div class="box-panel">
+                        <div class="container-fluid">
+                            <div class="image-dash">
+                               <a href="{% url 'shop:jobs' %}">
+                                <img src="{% static 'images/jobs.png' %}" style="width:60%; margin-left: 60px;"/>
+                               </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="box">
+                    <div class="box-top"> Parts Management </div>
+                    <div class="box-panel">
+                        <div class="container-fluid">
+                            <div class="image-dash">
+                                <a href="{% url 'shop:parts' %}">
+                                    <img src="{% static 'images/shopping-cart.png' %}" style="width:60%; margin-left: 60px;"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class=" col-sm-4" style="display: inline-block;">
+                <div id="box">
+                    <div class="box-top"> Supplier Management </div>
+                    <div class="box-panel">
+                        <div class="container-fluid">
+                            <div class="image-dash">
+                                <a href="{% url 'shop:supplier' %}">
+                                    <img src="{% static 'images/stock.png' %}" style="width:60%; margin-left: 60px;"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="box">
+                    <div class="box-top"> Technicians Management </div>
+                    <div class="box-panel">
+                        <div class="container-fluid">
+                            <div class="image-dash">
+                                <a href="{% url 'shop:technician' %}">
+                                 <img src="{% static 'images/gears.png' %}" style="width:60%; margin-left: 60px;"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+{% endblock %}

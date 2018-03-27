@@ -1,0 +1,32 @@
+{% extends 'shop/base.html' %}
+{% block title %}<title>Add a New Technician</title>{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-7" style="margin-top: 25px; margin-left: 25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                    <h2 style="padding-left:20px;"> Add a New Technician </h2> <br>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% include 'shop/form-template.html' %}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success"> Submit </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+
+{% endblock %}
